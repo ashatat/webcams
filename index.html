@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+
+  <!-- require the clappr.min.js to run the video player -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js"></script>
+</head>
+
+<body>
+    <script>
+      // function to get the streaming url from canariaslife website which get it from skylinewebcams.com
+      function getStreamUrl(url, cb) {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            var endUrlIndex = xhr.response.split('source:"')[1].indexOf('"');
+            var streamUrl = xhr.response.split('source:"')[1].slice(0, endUrlIndex);
+            cb(streamUrl);
+          }
+        }
+        xhr.open('GET', url);
+        xhr.send();
+      }
+      // function to get the streaming url from anfi.com which get it from ipcamlive.com
+      function getStreamUrl2(url, cb) {
+        var xhr2 = new XMLHttpRequest();
+        xhr2.onreadystatechange = function () {
+          if (xhr2.readyState == 4 && xhr2.status == 200) {
+            var endIdIndex = xhr2.response.split('var streamid = \'')[1].indexOf('\'');
+            var streamId = xhr2.response.split('var streamid = \'')[1].slice(0, endIdIndex);
+            var endAdressIndex = xhr2.response.split('var address = \'')[1].indexOf('\'');
+            var streamAdress = xhr2.response.split('var address = \'')[1].slice(0, endAdressIndex);
+            var streamUrl = streamAdress+'streams/'+streamId+'/stream.m3u8';
+            cb(streamUrl);       
+          }
+        }
+    
+        xhr2.open('GET', url, true);
+        xhr2.send();
+      }
+      // function to get the streaming url from whatsupcams
+      function getStreamUrl3(url, cb) {
+        var xhr3 = new XMLHttpRequest();
+        xhr3.onreadystatechange = function () {
+          if (xhr3.readyState == 4 && xhr3.status == 200) {
+            var endUrlIndex = xhr3.response.split('"url":"')[1].indexOf('"');
+            var streamUrl = xhr3.response.split('"url":"')[1].slice(0, endUrlIndex);
+            cb(streamUrl);
+          }
+        }
+        xhr3.open('GET', url, true);
+        xhr3.send();
+      }
+    </script>
+
+  <h2>first link</h2>
+
+  <div id="player1"></div>
+  <script>
+    var url1 = 'https://cors.io/?https://www.skylinewebcams.com/webcam/espana/canarias/las-palmas-gran-canaria/patalavaca.html';
+    getStreamUrl(url1, function(stream){
+      var player = new Clappr.Player({ source: stream, parentId: "#player1" });
+      console.log('stream1', stream);
+    })    
+  </script>
+
+  <h2>second link</h2>
+
+  <div id="player2"></div>
+  <script>
+    var url2 = 'https://cors.io/?https://www.skylinewebcams.com/webcam/espana/canarias/las-palmas-gran-canaria/playa-las-canteras.html';
+    getStreamUrl(url2, function(stream){
+      var player = new Clappr.Player({ source: stream, parentId: "#player2" });
+      console.log('stream2', stream);
+    })    
+  </script>
+
+  <h2>third link</h2>
+
+  <div id="player3"></div>  
+  <br>
+  <br>
+  <div id="player4"></div>  
+  <br>
+  <br>
+  <div id="player5"></div> 
+  <script>
+    var url3 = 'https://cors.io/?https://ipcamlive.com/player/player.php?alias=anfidelmar';
+    getStreamUrl2(url3, function(stream) {
+      var player = new Clappr.Player({ source: stream, parentId: "#player3" });
+      console.log('stream3', stream);
+    })
+    var url4 = 'https://cors.io/?https://ipcamlive.com/player/player.php?alias=anfibeachview';
+    getStreamUrl2(url4, function(stream) {
+      var player = new Clappr.Player({ source: stream, parentId: "#player4" });
+      console.log('stream4', stream);
+    })
+    var url5 = 'https://cors.io/?https://ipcamlive.com/player/player.php?alias=anfitauroemeraldclub';
+    getStreamUrl2(url5, function(stream) {
+      var player = new Clappr.Player({ source: stream, parentId: "#player5" });
+      console.log('stream5', stream);
+    })
+  </script>
+
+  <h2>fourth link</h2>
+  <!-- http://it.surf-forecast.com/breaks/Maspalomas/webcams/latest -->
+
+  <h2>fifth link</h2>
+  <!-- http://playademaspalomas.com/webcams-de-la-charca-de-maspalomas/ -->
+
+  <h2>six link</h2>
+  <div id="player6"></div>
+  <script>
+    var url6 = 'https://cors.io/?https://www.whatsupcams.com/cdn-api/streams?name=es_puertorico01&jsonp=true';    
+    getStreamUrl3(url6, function(stream) {
+      var player = new Clappr.Player({ source: stream, parentId: "#player6" });
+      console.log('stream6', stream)
+    });
+  </script>
+</body>
+</html>
