@@ -64,7 +64,16 @@
   <script>
     var url1 = 'https://cors.io/?https://www.skylinewebcams.com/webcam/espana/canarias/las-palmas-gran-canaria/patalavaca.html';
     getStreamUrl(url1, function(stream){
-      var player = new Clappr.Player({ source: stream, parentId: "#player1" });
+      var player = new Clappr.Player({ source: stream, parentId: "#player1", events: {
+        onError: function(){
+          getStreamUrl(url1, function(stream) {
+            player.configure({
+              source: stream
+            });
+            console.log('new stream source', player._options.source);
+          })
+        }
+      } });
       console.log('stream1', stream);
     })    
   </script>
@@ -75,7 +84,15 @@
   <script>
     var url2 = 'https://cors.io/?https://www.skylinewebcams.com/webcam/espana/canarias/las-palmas-gran-canaria/playa-las-canteras.html';
     getStreamUrl(url2, function(stream){
-      var player = new Clappr.Player({ source: stream, parentId: "#player2" });
+      var player = new Clappr.Player({ source: stream, parentId: "#player2", events: {
+        onError: function(){
+          getStreamUrl(url2, function(stream) {
+            player.configure({
+              source: stream
+            });
+          });
+        }
+      } });
       console.log('stream2', stream);
     })    
   </script>
@@ -92,17 +109,41 @@
   <script>
     var url3 = 'https://cors.io/?https://ipcamlive.com/player/player.php?alias=anfidelmar';
     getStreamUrl2(url3, function(stream) {
-      var player = new Clappr.Player({ source: stream, parentId: "#player3" });
+      var player = new Clappr.Player({ source: stream, parentId: "#player3", events: {
+        onError: function(){
+          getStreamUrl2(url3, function(stream) {
+            player.configure({
+              source: stream
+            })
+          })
+        }
+      } });
       console.log('stream3', stream);
     })
     var url4 = 'https://cors.io/?https://ipcamlive.com/player/player.php?alias=anfibeachview';
     getStreamUrl2(url4, function(stream) {
-      var player = new Clappr.Player({ source: stream, parentId: "#player4" });
+      var player = new Clappr.Player({ source: stream, parentId: "#player4", events: {
+        onError: function(){
+          getStreamUrl2(url4, function(stream) {
+            player.configure({
+              source: stream
+            })
+          })
+        }
+      } });
       console.log('stream4', stream);
     })
     var url5 = 'https://cors.io/?https://ipcamlive.com/player/player.php?alias=anfitauroemeraldclub';
     getStreamUrl2(url5, function(stream) {
-      var player = new Clappr.Player({ source: stream, parentId: "#player5" });
+      var player = new Clappr.Player({ source: stream, parentId: "#player5", events: {
+        onError: function(){
+          getStreamUrl2(url5, function(stream) {
+            player.configure({
+              source: stream
+            })
+          })
+        }
+      } });
       console.log('stream5', stream);
     })
   </script>
@@ -118,7 +159,15 @@
   <script>
     var url6 = 'https://cors.io/?https://www.whatsupcams.com/cdn-api/streams?name=es_puertorico01&jsonp=true';    
     getStreamUrl3(url6, function(stream) {
-      var player = new Clappr.Player({ source: stream, parentId: "#player6" });
+      var player = new Clappr.Player({ source: stream, parentId: "#player6",, events: {
+        onError: function(){
+          getStreamUrl2(url6, function(stream) {
+            player.configure({
+              source: stream
+            })
+          })
+        }
+      } });
       console.log('stream6', stream)
     });
   </script>
