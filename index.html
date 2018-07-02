@@ -159,7 +159,7 @@
   <script>
     var url6 = 'https://cors.io/?https://www.whatsupcams.com/cdn-api/streams?name=es_puertorico01&jsonp=true';    
     getStreamUrl3(url6, function(stream) {
-      var player = new Clappr.Player({ source: stream, parentId: "#player6",, events: {
+      var player = new Clappr.Player({ source: stream, parentId: "#player6", events: {
         onError: function(){
           getStreamUrl2(url6, function(stream) {
             player.configure({
